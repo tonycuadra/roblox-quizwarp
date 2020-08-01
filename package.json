@@ -1,0 +1,19 @@
+{
+  "name": "QuizWarp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rbxts/types": "^1.0.385"
+  },
+  "dependencies": {
+    "@rbxts/inspect": "^1.0.1",
+    "@rbxts/services": "^1.1.0"
+  }
+}
