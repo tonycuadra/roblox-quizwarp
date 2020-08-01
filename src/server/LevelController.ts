@@ -1,5 +1,3 @@
-import inspect from '@rbxts/inspect';
-
 import { BaseController } from 'shared/BaseController';
 import { TeleportController } from './TeleportController';
 import { LevelConfig } from 'shared/LevelConfig'
@@ -33,12 +31,8 @@ export class LevelController extends BaseController<Level> {
     }
 
     bindConfig(config: LevelConfig, allLevels: LevelController[]) {
-        if (this.questionText) {
-            this.questionText.Text = config.question;
-        }
-        if (this.levelNameText) {
-            this.levelNameText.Text = config.name;
-        }
+        this.questionText.Text = config.question;
+        this.levelNameText.Text = config.name;
 
         const nextLevel = config.index + 1;
         const correctDestination = ((nextLevel < allLevels.size())
