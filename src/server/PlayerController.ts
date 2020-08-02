@@ -25,11 +25,9 @@ export class PlayerController extends BaseController<Player> {
         const now = os.time();
         const deltaTime = now - this.lastTeleport;
         if (deltaTime > 1) {
-            print(`tryTeleport: true, deltaTime: ${deltaTime}`)
             this.lastTeleport = now;
             return true;
         }
-        print(`tryTeleport: false, deltaTime: ${deltaTime}`)
         return false;
     }
 

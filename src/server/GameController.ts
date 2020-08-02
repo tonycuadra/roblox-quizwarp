@@ -53,6 +53,6 @@ export class GameController {
         const levelCopy = this.levelModel.Clone() as Level;
         levelCopy.TranslateBy(new Vector3(LEVEL_OFFSET_X * index, 0, 0));
         levelCopy.Parent = this.levelParent;
-        return new LevelController(levelCopy, this.deathRoom);
+        return new LevelController(levelCopy, this.deathRoom, this.lobby);
     }
 }

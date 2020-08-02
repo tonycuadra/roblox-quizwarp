@@ -5,6 +5,8 @@ import { PlayerController } from './PlayerController';
 import { playerManager } from './GlobalConfig';
 
 const ACTION_NO_OP = () => {};
+const DEFAULT_PORTAL_COLOR = Color3.fromRGB(4, 175, 236);
+const LEVEL_COMPLETE_PORTAL_COLOR = Color3.fromRGB(0, 255, 0);
 
 export type TeleportAction = (player: PlayerController) => void;
 
@@ -45,6 +47,10 @@ export class TeleportController extends BaseController<TelepadModel> {
 
     clearTeleportAction() {
         this.teleportAction = ACTION_NO_OP;
+    }
+
+    setLevelComplete(complete: boolean) {
+        this.portal.Color = complete ? LEVEL_COMPLETE_PORTAL_COLOR : DEFAULT_PORTAL_COLOR;
     }
 
     private onTouch(otherPart: BasePart) {

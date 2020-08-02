@@ -2,24 +2,27 @@ import { BaseController } from 'shared/BaseController';
 import { TeleportController } from './TeleportController';
 import { LevelConfig } from 'shared/LevelConfig'
 import { DeathRoomController } from './DeathRoomController';
-import { quizWorkspace } from 'shared/QuizWarpWorkspace';
+import { quizWorkspace, Lobby } from 'shared/QuizWarpWorkspace';
 import { Level } from 'shared/Level';
 import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
 import { TelepadModel } from 'shared/Telepad';
 import { AsyncWait } from 'shared/Async';
 import { PlayerController } from './PlayerController';
+import { LobbyController } from './LobbyController';
 
 export class LevelController extends BaseController<Level> {
 
     deathRoom: DeathRoomController;
+    lobby: LobbyController;
     startLocation: BasePart;
     levelNameText: TextLabel;
     questionText: TextLabel;
     telepads: TeleportController[] = [];
 
-    constructor(level: Level, deathRoom: DeathRoomController) {
+    constructor(level: Level, deathRoom: DeathRoomController, lobby: LobbyController) {
         super(level)
         this.deathRoom = deathRoom;
+        this.lobby = lobby;
 
         this.startLocation = level.StartLocation;
         const gui = level.Walls.FrontWall.SurfaceGui;
@@ -70,6 +73,11 @@ export class LevelController extends BaseController<Level> {
         const existingValue = tonumber(statsValue.Value.sub(0, -2)) || 0;
         if (rounded > existingValue) {
             statsValue.Value = `${rounded}%`;
+        }
+
+        const isLastSublevel = config.sublevelIndex === config.sublevelCount - 1;
+        if (isLastSublevel) {
+            this.lobby.onLevelComplete(config.levelIndex);
         }
     }
 
