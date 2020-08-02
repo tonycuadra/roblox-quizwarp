@@ -27,13 +27,7 @@ export class LobbyController extends BaseController<Lobby> {
         }
     }
 
-    onLevelComplete(levelIndex: number) {
-        if (levelIndex >= this.teleportControllers.size()) {
-            print(`ERROR: onLevelComplete(${levelIndex}) -- invalid index`)
-            return;
-        }
-        print(`onLevelComplete, index: ${levelIndex}`)
-
-        this.teleportControllers[levelIndex].setLevelComplete(true);
+    onLevelComplete(player: Player, levelIndex: number) {
+        quizWorkspace.Lobby.LevelCompleteEvent.FireClient(player, levelIndex);
     }
 }

@@ -77,7 +77,7 @@ export class LevelController extends BaseController<Level> {
 
         const isLastSublevel = config.sublevelIndex === config.sublevelCount - 1;
         if (isLastSublevel) {
-            this.lobby.onLevelComplete(config.levelIndex);
+            this.lobby.onLevelComplete(player.instance, config.levelIndex);
         }
     }
 
