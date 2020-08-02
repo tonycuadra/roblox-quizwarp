@@ -2,8 +2,13 @@ import { GameController } from './GameController';
 import { generateMultiplicationQuiz } from './MultiplicationQuizGenerator';
 import { LevelConfig } from 'shared/LevelConfig';
 import { ServerStorage } from '@rbxts/services';
+import { playerManager } from './PlayerController';
 
 let gameController: GameController | undefined;
+
+const referenceGlobals = [
+    playerManager,
+]
 
 function initGame() {
     const levelModel = ServerStorage.FindFirstChild('Level') as Model;

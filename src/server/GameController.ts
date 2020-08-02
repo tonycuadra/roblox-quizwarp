@@ -34,7 +34,7 @@ export class GameController {
             this.levels[i].bindConfig(levelConfigs[i], this.levels);
         }
 
-        // Init lobby last since it needs start level to already be initialized
+        // Init lobby last since it needs start levels to already be initialized
         this.initLobby(startLevels);
     }
 

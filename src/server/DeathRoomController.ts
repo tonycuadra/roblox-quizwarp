@@ -20,4 +20,8 @@ export class DeathRoomController extends BaseController<DeathRoom> {
         const index = this.random.NextInteger(0, this.startLocations.size() - 1);
         return this.startLocations[index];
     }
+
+    scream() {
+        this.instance.DeathScream.Play();
+    }
 }

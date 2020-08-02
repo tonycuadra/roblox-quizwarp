@@ -6,6 +6,7 @@ import { quizWorkspace } from 'shared/QuizWarpWorkspace';
 import { Level } from 'shared/Level';
 import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
 import { TelepadModel } from 'shared/Telepad';
+import { AsyncWait } from 'shared/Async';
 
 export class LevelController extends BaseController<Level> {
 
@@ -43,9 +44,20 @@ export class LevelController extends BaseController<Level> {
         for (let i = 0; i < config.answers.size(); i++) {
             if (i < this.telepads.size()) {
                 this.telepads[i].setText(config.answers[i]);
+                if (i === config.correctIndex) {
+                    this.telepads[i].setDestination(correctDestination);
+                    this.telepads[i].clearTeleportAction();
+                } else {
+                    this.telepads[i].setDestination(this.deathRoom.randomStartLocation());
+                    this.telepads[i].setTeleportAction(async () => {
+                        await AsyncWait(0.2);
+                        this.deathRoom.scream();
+                    });
+                }
                 this.telepads[i].setDestination(
                     i === config.correctIndex ? correctDestination : this.deathRoom.randomStartLocation()
                 );
+                this.telepads[i]
             }
         }
     }

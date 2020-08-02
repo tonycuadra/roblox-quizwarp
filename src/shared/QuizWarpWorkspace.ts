@@ -4,10 +4,12 @@ export type QuizWarpWorkspace = Workspace & {
     Lobby: Lobby;
     DeathRoom: DeathRoom;
     Levels: Folder;
+    Music: Sound;
 };
 
 export type DeathRoom = Folder & {
     StartLocations: Folder;
+    DeathScream: Sound;
 };
 
 export type Lobby = Folder & {

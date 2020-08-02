@@ -1,6 +1,9 @@
 import { BaseController } from 'shared/BaseController';
 import { Players } from '@rbxts/services';
 import { TelepadModel } from 'shared/Telepad';
+import { playerManager, PlayerController } from './PlayerController';
+
+const ACTION_NO_OP = () => {};
 
 export class TeleportController extends BaseController<TelepadModel> {
 
@@ -8,6 +11,7 @@ export class TeleportController extends BaseController<TelepadModel> {
     private textLabel: TextLabel;
     private warpSound: Sound;
     private destination: CFrame;
+    private teleportAction: () => void;
 
     constructor(telepad: TelepadModel, text: string = "", destination?: CFrame) {
         super(telepad)
@@ -17,6 +21,7 @@ export class TeleportController extends BaseController<TelepadModel> {
         this.portal = telepad.Portal;
         this.textLabel = telepad.Portal.SurfaceGui.TextLabel;
         this.warpSound = telepad.TeleportSound;
+        this.teleportAction = ACTION_NO_OP;
         this.addConnection(
             this.portal.Touched.Connect(otherPart => this.onTouch(otherPart))
         );
@@ -31,16 +36,30 @@ export class TeleportController extends BaseController<TelepadModel> {
         this.destination = destination;
     }
 
+    setTeleportAction(action: () => void) {
+        this.teleportAction = action;
+    }
+
+    clearTeleportAction() {
+        this.teleportAction = ACTION_NO_OP;
+    }
+
     private onTouch(otherPart: BasePart) {
         const player = Players.GetPlayerFromCharacter(otherPart.Parent);
         if (player !== undefined) {
-            this.teleportPlayer(otherPart.Parent!);
+            const playerController = playerManager.getPlayerController(player);
+            if (playerController) {
+                this.teleportPlayer(playerController);
+            }
         }
     }
 
-    private teleportPlayer(character: Instance) {
+    private teleportPlayer(playerController: PlayerController) {
+        if (!playerController.tryTeleport()) {
+            return;
+        }
         this.warpSound.Play();
-        const humanoidRootPart = character.FindFirstChild('HumanoidRootPart', true) as BasePart;
-        humanoidRootPart.CFrame = this.destination;
+        this.teleportAction();
+        playerController.humanoidRootPart.CFrame = this.destination;
     }
 }
