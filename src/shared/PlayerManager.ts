@@ -1,4 +1,3 @@
-// import { Players } from '@rbxts/services';
 import { Closeable } from './Closeable';
 import { Players } from '@rbxts/services';
 
@@ -10,9 +9,9 @@ export const PLAYER_ROOT_OFFSET = new Vector3(0, 3.5, 0);
 export class PlayerManager<T extends Closeable> {
 
     private controllerMap: Map<Player, T> = new Map();
-    private controllerFactory: (player: Player, character: Model) => T;
+    private controllerFactory: (player: Player) => T;
 
-    constructor(controllerFactory: (player: Player, character: Model) => T) {
+    constructor(controllerFactory: (player: Player) => T) {
         this.controllerFactory = controllerFactory;
 
         print('Creating PlayerManager');
@@ -34,12 +33,8 @@ export class PlayerManager<T extends Closeable> {
     }
 
     private onAdded(player: Player) {
-        player.CharacterAdded.Connect(character => {
-            this.onPlayerAdded(player, character);
-        })
-        if (player.Character) {
-            this.onPlayerAdded(player, player.Character);
-        }
+        const controller = this.controllerFactory(player);
+        this.controllerMap.set(player, controller);
     }
 
     private onRemoved(player: Player) {
@@ -48,10 +43,5 @@ export class PlayerManager<T extends Closeable> {
         if (controller !== undefined) {
             controller.close();
         }
-    }
-
-    private onPlayerAdded(player: Player, character: Model) {
-        const controller = this.controllerFactory(player, character);
-        this.controllerMap.set(player, controller);
     }
 }

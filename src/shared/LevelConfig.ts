@@ -1,7 +1,10 @@
 export class LevelConfig {
-    index: number = 0;
+    levelIndex: number = 0;
+    sublevelIndex: number = 0;
+    overallIndex: number = 0;
+    sublevelCount: number = 0;
     name: string = "";
     question: string = "";
     answers: string[] = [];
-    correctIndex: number = 0;
+    correct: number = 0;
 }

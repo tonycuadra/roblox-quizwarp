@@ -12,3 +12,9 @@ export async function AsyncWait(seconds: number): Promise<LuaTuple<[number, numb
         Promise.spawn(() => resolve(wait(seconds)));
     });
 }
+
+export async function AsyncWaitForSignal(signal: RBXScriptSignal): Promise<LuaTuple<any[]>> {
+    return new Promise<LuaTuple<any[]>>(resolve => {
+        Promise.spawn(() => resolve(signal.Wait()));
+    });
+}

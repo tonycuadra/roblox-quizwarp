@@ -1,7 +1,7 @@
 import { LevelConfig } from "shared/LevelConfig";
 
-export function generateMultiplicationQuiz(num: number, level: number) {
-    const quiz: LevelConfig[] = [];
+export function generateMultiplicationQuiz(num: number, level: number, quiz: LevelConfig[]) {
+    const nextLevel = quiz.size();
     const rand = new Random();
 
     for (let i = 1; i <= 12; i++) {
@@ -20,12 +20,15 @@ export function generateMultiplicationQuiz(num: number, level: number) {
         }
 
         quiz.push({
-            index: i - 1,
+            levelIndex: level - 1,
+            sublevelIndex: i - 1,
+            overallIndex: nextLevel + i - 1,
+            sublevelCount: 12,
             name: `Level ${level}-${i}`,
             question: `${num} x ${i}`,
             answers: answers,
-            correctIndex: correctIndex,
-        });
+            correct: correctIndex,
+       });
     }
     return quiz;
 }

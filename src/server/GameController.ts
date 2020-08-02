@@ -30,7 +30,6 @@ export class GameController {
 
         // Bind level configs
         for (let i = 0; i < levelConfigs.size(); i++) {
-            levelConfigs[i].index = i;
             this.levels[i].bindConfig(levelConfigs[i], this.levels);
         }
 

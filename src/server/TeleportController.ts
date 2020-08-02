@@ -1,9 +1,12 @@
 import { BaseController } from 'shared/BaseController';
 import { Players } from '@rbxts/services';
 import { TelepadModel } from 'shared/Telepad';
-import { playerManager, PlayerController } from './PlayerController';
+import { PlayerController } from './PlayerController';
+import { playerManager } from './GlobalConfig';
 
 const ACTION_NO_OP = () => {};
+
+export type TeleportAction = (player: PlayerController) => void;
 
 export class TeleportController extends BaseController<TelepadModel> {
 
@@ -11,7 +14,7 @@ export class TeleportController extends BaseController<TelepadModel> {
     private textLabel: TextLabel;
     private warpSound: Sound;
     private destination: CFrame;
-    private teleportAction: () => void;
+    private teleportAction: TeleportAction;
 
     constructor(telepad: TelepadModel, text: string = "", destination?: CFrame) {
         super(telepad)
@@ -36,7 +39,7 @@ export class TeleportController extends BaseController<TelepadModel> {
         this.destination = destination;
     }
 
-    setTeleportAction(action: () => void) {
+    setTeleportAction(action: TeleportAction) {
         this.teleportAction = action;
     }
 
@@ -54,12 +57,13 @@ export class TeleportController extends BaseController<TelepadModel> {
         }
     }
 
-    private teleportPlayer(playerController: PlayerController) {
+    private async teleportPlayer(playerController: PlayerController) {
         if (!playerController.tryTeleport()) {
             return;
         }
         this.warpSound.Play();
-        this.teleportAction();
-        playerController.humanoidRootPart.CFrame = this.destination;
+        this.teleportAction(playerController);
+        const humanoidRootPart = await playerController.getHumanoidRootPartAsync();
+        humanoidRootPart.CFrame = this.destination;
     }
 }
