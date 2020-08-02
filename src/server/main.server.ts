@@ -2,7 +2,7 @@ import { GameController } from './GameController';
 import { generateMultiplicationQuiz } from './MultiplicationQuizGenerator';
 import { LevelConfig } from 'shared/LevelConfig';
 import { ServerStorage } from '@rbxts/services';
-import { playerManager, NUM_LEVELS } from './GlobalConfig';
+import { playerManager, NUM_LEVELS, FIRST_NUMBER } from './GlobalConfig';
 
 const refPlayerManager = playerManager;
 
@@ -17,7 +17,7 @@ function initGame() {
     // Generate multiplication quiz levels
     for (let i = 0; i < NUM_LEVELS; i++) {
         startLevels.push(levels.size());
-        generateMultiplicationQuiz(4 + i, 1 + i, levels);
+        generateMultiplicationQuiz(FIRST_NUMBER + i, 1 + i, levels);
     }
 
     gameController.configure(levels, startLevels);
