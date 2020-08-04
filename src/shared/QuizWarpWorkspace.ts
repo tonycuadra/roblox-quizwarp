@@ -14,7 +14,7 @@ export type DeathRoom = Folder & {
 
 export type Lobby = Folder & {
     LevelCompleteEvent: RemoteEvent;
-    SpawnLocation: SpawnLocation;
+    StartSpawn: SpawnLocation;
     Telepads: Folder;
 };
 

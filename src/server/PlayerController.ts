@@ -5,18 +5,18 @@ import { AsyncWaitForSignal } from "shared/Async";
 
 export class PlayerController extends BaseController<Player> {
     lastTeleport: number;
-    levelstats: StringValue[];
+    // levelstats: StringValue[];
 
     constructor(player: Player, numLevels: number) {
         super(player);
 
         this.lastTeleport = 0;
 
-        const leaderstats = newFolder('leaderstats', player);
-        this.levelstats = [];
-        for (let level = 1; level <= numLevels; level++) {
-            this.levelstats.push(newStringValue(`Level ${level}`, '0%', leaderstats));
-        }
+        // const leaderstats = newFolder('leaderstats', player);
+        // this.levelstats = [];
+        // for (let level = 1; level <= numLevels; level++) {
+        //     this.levelstats.push(newStringValue(`Level ${level}`, '0%', leaderstats));
+        // }
 
         print(`Created PlayerController: ${this.instance}`);
     }

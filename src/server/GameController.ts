@@ -4,6 +4,7 @@ import { LevelConfig } from "shared/LevelConfig";
 import { LobbyController } from "./LobbyController";
 import { DeathRoomController } from "./DeathRoomController";
 import { Level } from "shared/Level";
+import { quizServerStorage } from "shared/QuizServerStorage";
 
 const LEVEL_OFFSET_X = 100;
 
@@ -15,14 +16,14 @@ export class GameController {
     lobby: LobbyController;
     deathRoom: DeathRoomController;
 
-    constructor(levelModel: Model) {
-        this.levelModel = levelModel;
+    constructor() {
+        this.levelModel = quizServerStorage.Level;
         this.levelParent = Workspace.FindFirstChild('Levels') as Folder;
         this.lobby = new LobbyController();
         this.deathRoom = new DeathRoomController();
     }
 
-    configure(levelConfigs: LevelConfig[], startLevels: number[]) {
+    configure(levelConfigs: LevelConfig[], startLevels: number[], checkpointLevels: number[]) {
         for (let i = 0; i < levelConfigs.size(); i++) {
             const levelController = this.createLevel(i);
             this.levels.push(levelController);
@@ -30,7 +31,8 @@ export class GameController {
 
         // Bind level configs
         for (let i = 0; i < levelConfigs.size(); i++) {
-            this.levels[i].bindConfig(levelConfigs[i], this.levels);
+            const isCheckPoint = checkpointLevels.includes(i);
+            this.levels[i].bindConfig(levelConfigs[i], this.levels, isCheckPoint);
         }
 
         // Init lobby last since it needs start levels to already be initialized
