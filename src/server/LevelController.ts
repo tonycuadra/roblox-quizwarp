@@ -6,7 +6,7 @@ import { quizWorkspace, Lobby } from 'shared/QuizWarpWorkspace';
 import { Level } from 'shared/Level';
 import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
 import { TelepadModel } from 'shared/Telepad';
-import { AsyncWait } from 'shared/Async';
+import { WaitAsync } from 'shared/Async';
 import { PlayerController } from './PlayerController';
 import { LobbyController } from './LobbyController';
 import { quizServerStorage } from 'shared/QuizServerStorage';
@@ -92,7 +92,7 @@ export class LevelController extends BaseController<Level> {
     }
 
     async onTeleportToDeath() {
-        await AsyncWait(0.2);
+        await WaitAsync(0.2);
         this.deathRoom.scream();
     }
 }

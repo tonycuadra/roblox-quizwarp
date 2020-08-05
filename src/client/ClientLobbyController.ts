@@ -1,7 +1,7 @@
 import { BaseController } from 'shared/BaseController';
 import { quizWorkspace, Lobby } from 'shared/QuizWarpWorkspace';
 import { TelepadModel } from 'shared/Telepad';
-import { AsyncChildOf } from 'shared/Async';
+import { WaitForChildAsync } from 'shared/Async';
 
 const LEVEL_COMPLETE_PORTAL_COLOR = Color3.fromRGB(0, 255, 0);
 
@@ -13,7 +13,7 @@ export class ClientLobbyController extends BaseController<Lobby> {
     }
 
     async initAsync() {
-        await AsyncChildOf(this.instance, 'LevelCompleteEvent');
+        await WaitForChildAsync(this.instance, 'LevelCompleteEvent');
         this.addConnection(
             this.instance.LevelCompleteEvent.OnClientEvent.Connect(
                 (levelIndex: number) => this.onLevelComplete(levelIndex)

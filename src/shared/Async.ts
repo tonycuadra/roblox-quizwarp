@@ -1,20 +1,41 @@
-export async function AsyncChildOf(parent: Instance, name: string): Promise<Instance> {
-    return new Promise(resolve => {
+export async function RunAsync<T>(yieldingFunction: () => T) {
+    return new Promise<T>(resolve => {
         Promise.spawn(() => {
-            const child = parent.WaitForChild(name);
-            resolve(child);
+            const result = yieldingFunction();
+            resolve(result);
         });
     });
 }
 
-export async function AsyncWait(seconds: number): Promise<LuaTuple<[number, number]>> {
-    return new Promise<LuaTuple<[number, number]>>(resolve => {
-        Promise.spawn(() => resolve(wait(seconds)));
+export async function OpcallAsync<T>(yieldingFunction: () => T) {
+    return new Promise<T>((resolve, reject) => {
+        Promise.spawn(() => {
+            const result = opcall(yieldingFunction);
+            if (result.success) {
+                resolve(result.value);
+            } else {
+                reject(result.error);
+            }
+        });
     });
 }
 
-export async function AsyncWaitForSignal(signal: RBXScriptSignal): Promise<LuaTuple<any[]>> {
-    return new Promise<LuaTuple<any[]>>(resolve => {
-        Promise.spawn(() => resolve(signal.Wait()));
-    });
+export async function WaitForChildAsync(parent: Instance, name: string) {
+    return RunAsync(() => parent.WaitForChild(name))
+}
+
+export async function WaitAsync(seconds: number) {
+    return RunAsync(() => wait(seconds));
+}
+
+export async function GetDataAsync<T>(dataStore: GlobalDataStore, key: string) {
+    return OpcallAsync(() => dataStore.GetAsync<T>(key));
+}
+
+export async function SetDataAsync<T>(dataStore: GlobalDataStore, key: string, value: T) {
+    return OpcallAsync(() => dataStore.SetAsync(key, value));
+}
+
+export async function WaitForSignalAsync(signal: RBXScriptSignal): Promise<LuaTuple<any[]>> {
+    return RunAsync(() => signal.Wait());
 }

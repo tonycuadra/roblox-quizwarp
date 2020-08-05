@@ -1,7 +1,7 @@
 import { Closeable } from "shared/Closeable";
 import { newFolder, newStringValue } from "shared/NewInstance";
 import { BaseController } from "shared/BaseController";
-import { AsyncWaitForSignal } from "shared/Async";
+import { WaitForSignalAsync } from "shared/Async";
 
 export class PlayerController extends BaseController<Player> {
     lastTeleport: number;
@@ -36,7 +36,7 @@ export class PlayerController extends BaseController<Player> {
         if (player.Character) {
             return player.Character;
         }
-        const [character] = await AsyncWaitForSignal(player.CharacterAdded);
+        const [character] = await WaitForSignalAsync(player.CharacterAdded);
         return character;
     }
 
