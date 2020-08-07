@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@rbxts/inspect": "^1.0.1",
-    "@rbxts/services": "^1.1.0"
+    "@rbxts/services": "^1.1.0",
+    "@rbxts/validate-tree": "^1.0.6"
   }
 }

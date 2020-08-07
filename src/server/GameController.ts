@@ -3,8 +3,8 @@ import { Workspace } from "@rbxts/services";
 import { LevelConfig } from "shared/LevelConfig";
 import { LobbyController } from "./LobbyController";
 import { DeathRoomController } from "./DeathRoomController";
-import { Level } from "shared/Level";
-import { quizServerStorage } from "shared/QuizServerStorage";
+import { Level } from "shared/types/Level";
+import { quizServerStorage } from "shared/types/QuizServerStorage";
 
 const LEVEL_OFFSET_X = 100;
 

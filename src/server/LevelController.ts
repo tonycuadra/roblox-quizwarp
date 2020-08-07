@@ -2,16 +2,15 @@ import { BaseController } from 'shared/BaseController';
 import { TeleportController } from './TeleportController';
 import { LevelConfig } from 'shared/LevelConfig'
 import { DeathRoomController } from './DeathRoomController';
-import { quizWorkspace, Lobby } from 'shared/QuizWarpWorkspace';
-import { Level } from 'shared/Level';
+import { Level } from 'shared/types/Level';
 import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
-import { TelepadModel } from 'shared/Telepad';
+import { Telepad } from 'shared/types/Level';
 import { WaitAsync } from 'shared/Async';
 import { PlayerController } from './PlayerController';
 import { LobbyController } from './LobbyController';
-import { quizServerStorage } from 'shared/QuizServerStorage';
 import { Workspace } from '@rbxts/services';
-import inspect from '@rbxts/inspect';
+import { quizWorkspace } from 'shared/types/QuizWorkspace';
+import { quizServerStorage } from 'shared/types/QuizServerStorage';
 
 export class LevelController extends BaseController<Level> {
 
@@ -34,7 +33,7 @@ export class LevelController extends BaseController<Level> {
 
         const telepadsFolder = this.instance.Telepads;
         for (const child of telepadsFolder.GetChildren()) {
-            this.telepads.push(new TeleportController(child as TelepadModel)!);
+            this.telepads.push(new TeleportController(child as Telepad)!);
         }
     }
 

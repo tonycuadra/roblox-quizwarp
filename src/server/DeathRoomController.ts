@@ -1,5 +1,6 @@
 import { BaseController } from 'shared/BaseController';
-import { quizWorkspace, DeathRoom } from 'shared/QuizWarpWorkspace';
+import { quizWorkspace } from 'shared/types/QuizWorkspace';
+import { DeathRoom } from 'shared/types/DeathRoom';
 
 export class DeathRoomController extends BaseController<DeathRoom> {
 

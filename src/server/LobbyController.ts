@@ -1,8 +1,9 @@
 import { BaseController } from 'shared/BaseController';
 import { TeleportController } from './TeleportController';
 import { LevelController } from './LevelController';
-import { quizWorkspace, Lobby } from 'shared/QuizWarpWorkspace';
-import { TelepadModel } from 'shared/Telepad';
+import { Telepad } from 'shared/types/Level';
+import { Lobby } from 'shared/types/Lobby';
+import { quizWorkspace } from 'shared/types/QuizWorkspace';
 
 export class LobbyController extends BaseController<Lobby> {
 
@@ -18,7 +19,7 @@ export class LobbyController extends BaseController<Lobby> {
             throw `ERROR: Lobby telepads size ${telepads.size()} !== start levels size ${startLevels.size()}`;
         }
         for (let i = 0; i < telepads.size(); i++) {
-            const telepad = telepads[i] as TelepadModel;
+            const telepad = telepads[i] as Telepad;
             const level = startLevels[i];
             const destination = level.startLocation!.CFrame;
             const teleportController = new TeleportController(

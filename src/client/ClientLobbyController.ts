@@ -1,19 +1,19 @@
 import { BaseController } from 'shared/BaseController';
-import { quizWorkspace, Lobby } from 'shared/QuizWarpWorkspace';
-import { TelepadModel } from 'shared/Telepad';
-import { WaitForChildAsync } from 'shared/Async';
+import { quizWorkspace } from 'shared/types/QuizWorkspace';
+import { Telepad } from 'shared/types/Level';
+import { yieldForTree } from '@rbxts/validate-tree';
+import { Lobby } from 'shared/types/Lobby';
+import { AsyncController } from 'shared/AsyncController';
 
 const LEVEL_COMPLETE_PORTAL_COLOR = Color3.fromRGB(0, 255, 0);
 
-export class ClientLobbyController extends BaseController<Lobby> {
+export class ClientLobbyController extends AsyncController<Lobby> {
 
     constructor() {
-        super(quizWorkspace.Lobby)
-        this.initAsync();
+        super(quizWorkspace.Lobby, Lobby)
     }
 
-    async initAsync() {
-        await WaitForChildAsync(this.instance, 'LevelCompleteEvent');
+    onFullTreeReady() {
         this.addConnection(
             this.instance.LevelCompleteEvent.OnClientEvent.Connect(
                 (levelIndex: number) => this.onLevelComplete(levelIndex)
@@ -21,7 +21,7 @@ export class ClientLobbyController extends BaseController<Lobby> {
         );
     }
 
-    onLevelComplete(levelIndex: number) {
+    async onLevelComplete(levelIndex: number) {
         const telepads = this.instance.Telepads.GetChildren();
 
         if (levelIndex >= telepads.size()) {
@@ -30,7 +30,8 @@ export class ClientLobbyController extends BaseController<Lobby> {
             return;
         }
 
-        const telepad = telepads[levelIndex] as TelepadModel;
+        const telepad = telepads[levelIndex] as Telepad;
+        await yieldForTree(telepad, Telepad);
         telepad.Portal.Color = LEVEL_COMPLETE_PORTAL_COLOR;
     }
 }

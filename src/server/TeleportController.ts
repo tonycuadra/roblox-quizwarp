@@ -1,6 +1,6 @@
 import { BaseController } from 'shared/BaseController';
 import { Players } from '@rbxts/services';
-import { TelepadModel } from 'shared/Telepad';
+import { Telepad } from 'shared/types/Level';
 import { PlayerController } from './PlayerController';
 import { playerManager } from './GlobalConfig';
 
@@ -8,7 +8,7 @@ const ACTION_NO_OP = () => {};
 
 export type TeleportAction = (player: PlayerController) => void;
 
-export class TeleportController extends BaseController<TelepadModel> {
+export class TeleportController extends BaseController<Telepad> {
 
     private portal: BasePart;
     private textLabel: TextLabel;
@@ -16,7 +16,7 @@ export class TeleportController extends BaseController<TelepadModel> {
     private destination: CFrame;
     private teleportAction: TeleportAction;
 
-    constructor(telepad: TelepadModel, text: string = "", destination?: CFrame) {
+    constructor(telepad: Telepad, text: string = "", destination?: CFrame) {
         super(telepad)
 
         this.destination = destination || new CFrame();
