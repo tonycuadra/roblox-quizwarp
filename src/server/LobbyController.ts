@@ -4,6 +4,7 @@ import { LevelController } from './LevelController';
 import { Telepad } from 'shared/types/Level';
 import { Lobby } from 'shared/types/Lobby';
 import { quizWorkspace } from 'shared/types/QuizWorkspace';
+import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
 
 export class LobbyController extends BaseController<Lobby> {
 
@@ -21,7 +22,7 @@ export class LobbyController extends BaseController<Lobby> {
         for (let i = 0; i < telepads.size(); i++) {
             const telepad = telepads[i] as Telepad;
             const level = startLevels[i];
-            const destination = level.startLocation!.CFrame;
+            const destination = level.startLocation!.CFrame.add(PLAYER_ROOT_OFFSET);
             const teleportController = new TeleportController(
                 telepad, level.levelNameText.Text.slice(6, 7), destination);
             this.teleportControllers.push(teleportController);

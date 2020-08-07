@@ -1,7 +1,6 @@
-import { Closeable } from "shared/Closeable";
-import { newFolder, newStringValue } from "shared/NewInstance";
-import { BaseController } from "shared/BaseController";
 import { WaitForSignalAsync } from "shared/Async";
+import { BaseController } from "shared/BaseController";
+import yieldForCharacter, { CharacterRigR15 } from "@rbxts/yield-for-character";
 
 export class PlayerController extends BaseController<Player> {
     lastTeleport: number;
@@ -31,13 +30,12 @@ export class PlayerController extends BaseController<Player> {
         return false;
     }
 
-    async getCharacterAsync(): Promise<Model> {
+    async getCharacterAsync(): Promise<CharacterRigR15> {
         const player = this.instance;
-        if (player.Character) {
-            return player.Character;
+        if (!player.Character) {
+            await WaitForSignalAsync(player.CharacterAdded);
         }
-        const [character] = await WaitForSignalAsync(player.CharacterAdded);
-        return character;
+        return await yieldForCharacter(player.Character!)
     }
 
     async getHumanoidRootPartAsync(): Promise<BasePart> {
