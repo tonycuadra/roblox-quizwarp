@@ -1,4 +1,4 @@
-export async function RunAsync<T>(yieldingFunction: () => T) {
+export async function RunAsync<T>(yieldingFunction: () => T): Promise<T> {
     return new Promise<T>(resolve => {
         Promise.spawn(() => {
             const result = yieldingFunction();
@@ -7,7 +7,7 @@ export async function RunAsync<T>(yieldingFunction: () => T) {
     });
 }
 
-export async function OpcallAsync<T>(yieldingFunction: () => T) {
+export async function OpcallAsync<T>(yieldingFunction: () => T): Promise<T> {
     return new Promise<T>((resolve, reject) => {
         Promise.spawn(() => {
             const result = opcall(yieldingFunction);
