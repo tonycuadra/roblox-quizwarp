@@ -1,4 +1,4 @@
-import { BaseController } from 'shared/BaseController';
+import { BaseController } from 'shared/utils/BaseController';
 import { quizWorkspace } from 'shared/types/QuizWorkspace';
 import { DeathRoom } from 'shared/types/DeathRoom';
 

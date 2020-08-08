@@ -1,10 +1,10 @@
-import { BaseController } from 'shared/BaseController';
+import { BaseController } from 'shared/utils/BaseController';
 import { TeleportController } from './TeleportController';
 import { LevelController } from './LevelController';
 import { Telepad } from 'shared/types/Level';
 import { Lobby } from 'shared/types/Lobby';
 import { quizWorkspace } from 'shared/types/QuizWorkspace';
-import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
+import { PLAYER_ROOT_OFFSET } from 'shared/utils/PlayerManager';
 
 export class LobbyController extends BaseController<Lobby> {
 

@@ -1,9 +1,9 @@
-import { BaseController } from 'shared/BaseController';
+import { BaseController } from 'shared/utils/BaseController';
 import { quizWorkspace } from 'shared/types/QuizWorkspace';
 import { Telepad } from 'shared/types/Level';
 import { yieldForTree } from '@rbxts/validate-tree';
 import { Lobby } from 'shared/types/Lobby';
-import { AsyncController } from 'shared/AsyncController';
+import { AsyncController } from 'shared/utils/AsyncController';
 
 const LEVEL_COMPLETE_PORTAL_COLOR = Color3.fromRGB(0, 255, 0);
 

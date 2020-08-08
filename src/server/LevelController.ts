@@ -1,11 +1,11 @@
-import { BaseController } from 'shared/BaseController';
+import { BaseController } from 'shared/utils/BaseController';
 import { TeleportController } from './TeleportController';
 import { LevelConfig } from 'shared/LevelConfig'
 import { DeathRoomController } from './DeathRoomController';
 import { Level } from 'shared/types/Level';
-import { PLAYER_ROOT_OFFSET } from 'shared/PlayerManager';
+import { PLAYER_ROOT_OFFSET } from 'shared/utils/PlayerManager';
 import { Telepad } from 'shared/types/Level';
-import { WaitAsync } from 'shared/Async';
+import { WaitAsync } from 'shared/utils/Async';
 import { PlayerController } from './PlayerController';
 import { LobbyController } from './LobbyController';
 import { Workspace } from '@rbxts/services';

@@ -1,5 +1,5 @@
-import { WaitForSignalAsync } from "shared/Async";
-import { BaseController } from "shared/BaseController";
+import { WaitForSignalAsync } from "shared/utils/Async";
+import { BaseController } from "shared/utils/BaseController";
 import yieldForCharacter, { CharacterRigR15 } from "@rbxts/yield-for-character";
 
 export class PlayerController extends BaseController<Player> {

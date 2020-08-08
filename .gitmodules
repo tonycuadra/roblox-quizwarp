@@ -1,0 +1,3 @@
+[submodule "src/shared/utils"]
+	path = src/shared/utils
+	url = https://github.com/tonycuadra/roblox-utils.git
